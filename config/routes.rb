@@ -3,6 +3,6 @@ Rails.application.routes.draw do
   resources :ideas
   get("/", to: "ideas#index", as: :root)
 
-  resource :session
+  resource :session, only: [:new, :create, :destroy]
   resources :users, only: [:new, :create]
 end
