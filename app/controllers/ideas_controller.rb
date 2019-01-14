@@ -6,6 +6,7 @@ class IdeasController < ApplicationController
     def new
         @idea = Idea.new
     end
+
     def create
         @idea = Idea.new idea_params
 
@@ -14,6 +15,10 @@ class IdeasController < ApplicationController
         else
             render :new
         end
+    end
+
+    def show
+        @idea = Idea.find params[:id]
     end
 
     private
