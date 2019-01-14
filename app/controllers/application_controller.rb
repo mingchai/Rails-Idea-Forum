@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     helper_method(:user_signed_in?)
 
     def authenticate_user!
-        unless signed_in?
+        unless user_signed_in?
             flash[:danger] = "Please sign in or sign up"
             redirect_to new_session_url
         end

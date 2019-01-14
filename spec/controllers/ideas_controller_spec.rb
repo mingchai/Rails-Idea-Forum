@@ -110,7 +110,11 @@ RSpec.describe IdeasController, type: :controller do
                 expect(response).to redirect_to(new_session_url)
             end
         end
-        context 'with signed-in user'
+        context 'with signed-in user' do
+            it 'removes an entry from the database'
+            it 'redirects to the root/index page'
+        end
+
     end
 
 

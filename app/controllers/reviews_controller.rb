@@ -1,4 +1,6 @@
 class ReviewsController < ApplicationController
+    before_action :authorize_user!, only: [:destroy]
+    
     def new
         @review = Review.new
     end
@@ -17,12 +19,21 @@ class ReviewsController < ApplicationController
     end
 
     def destroy
-        
+        @review = Review.find params[:id]
+        @review.destroy
+        redirect_to idea_path(@review.idea)
     end
 
     private
 
     def review_params
         params.require(:review).permit(:title)
+    end
+
+    def authorize_user!
+        unless can?(:crud, @review)
+            flash[:danger] = "Access Denied: You do not have authorization to perform this action"
+            redirect_to idea_path
+        end
     end
 end

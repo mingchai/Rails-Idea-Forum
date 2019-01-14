@@ -1,6 +1,6 @@
 class IdeasController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
-    before_action :authorize_user!, only: [:edit, :update]
+    # before_action :authorize_user!, only: [:edit, :update]
     
     def index
         @ideas = Idea.all
@@ -33,11 +33,14 @@ class IdeasController < ApplicationController
 
     def update
         @idea = Idea.find params[:id]
-        
-        if @idea.update idea_params
-            redirect_to idea_path(@idea.id)
+        if can?(:crud, @idea)
+            if @idea.update idea_params
+                redirect_to idea_path(@idea.id)
+            else
+                render :edit
+            end
         else
-            render :edit
+            redirect_to idea_path(@idea.id)
         end
     end
 
@@ -59,10 +62,10 @@ class IdeasController < ApplicationController
         params.require(:idea).permit(:title, :description)
     end
 
-    def authorize_user!
-        unless can?(:crud, @idea)
-            flash[:danger] = "Access Denied: You do not have authorization to perform this action"
-            redirect_to idea_path
-        end
-    end
+    # def authorize_user!
+    #     unless can?(:crud, @idea)
+    #         flash[:danger] = "Access Denied: You do not have authorization to perform this action"
+    #         redirect_to idea_path
+    #     end
+    # end
 end
