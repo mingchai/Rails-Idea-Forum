@@ -1,7 +1,7 @@
 <%= form_with model: @idea, local: true do |f|%>
 <h3>What's Your Idea?</h3>
 <% if @idea.errors.present?%>
-    <%= @idea.errors.full_messages/join(", ")%>
+    <%= @idea.errors.full_messages.join(", ")%>
 <% end %>
 <div>
 <%= f.label :title%> <br>
