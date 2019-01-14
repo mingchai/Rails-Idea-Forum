@@ -8,6 +8,13 @@
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
+  <header>
+    <nav>
+      <%= link_to 'Home', ideas_path %>
+      |
+      <%= link_to 'New Idea', new_idea_path %>
+    </nav>
+  </header>
 
   <body>
     <%= yield %>

@@ -1,0 +1,16 @@
+<h1>Create New Idea Post</h1>
+
+<%= form_with model: @idea, local: true do |f|%>
+<h3>What's Your Idea?</h3>
+<div>
+<%= f.label :title%>
+<%= f.text_field :title%>
+</div>
+
+<div>
+<%= f.label :description%>
+<%= f.text_field :description%>
+</div>
+
+<%= f.submit%>
+<% end %>
