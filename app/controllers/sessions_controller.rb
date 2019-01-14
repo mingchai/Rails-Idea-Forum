@@ -8,7 +8,8 @@ class SessionsController < ApplicationController
 
         if user&.authenticate(params[:password])
         session[:user_id] = user.id
-        redirect_to root_path, notice: "Welcome #{user.first_name}!"
+        flash[:primary] = "Welcome #{user.first_name}!"
+        redirect_to root_path 
         else
             flash[:danger] = "Email or Password is incorrect"
             render :new

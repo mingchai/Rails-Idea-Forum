@@ -1,6 +1,6 @@
 <h1>Idea Details</h1>
 <h3><%= @idea.title%></h3>
-
+<small>Created by <%= @idea.user.full_name%> </small>
 <div><%= @idea.description%></div>
 <%= link_to 'Update Idea', edit_idea_path(@idea.id) %>
 |
