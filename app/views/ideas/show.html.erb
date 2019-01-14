@@ -3,3 +3,5 @@
 
 <div><%= @idea.description%></div>
 <%= link_to 'Update Idea', edit_idea_path(@idea.id) %>
+|
+<%= link_to 'Delete Idea', idea_path(@idea.id), method: :delete, data: {confirm: "Idea will be deleted. Proceed?"} %>
