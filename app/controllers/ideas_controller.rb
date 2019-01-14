@@ -1,6 +1,6 @@
 class IdeasController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
-    before_action :authorize_user!, only: [:edit, :update, :destroy]
+    before_action :authorize_user!, only: [:edit, :update]
     
     def index
         @ideas = Idea.all
@@ -23,6 +23,8 @@ class IdeasController < ApplicationController
 
     def show
         @idea = Idea.find params[:id]
+        @reviews = @idea.reviews
+        @review = Review.new
     end
 
     def edit
@@ -41,8 +43,14 @@ class IdeasController < ApplicationController
 
     def destroy
         @idea = Idea.find params[:id]
-        @idea.destroy
-        redirect_to ideas_path
+        if can?(:crud, @idea)
+            @idea.destroy
+            redirect_to ideas_path
+        else
+            flash[:danger] = "Access Denied: You do not have authorization to perform this action"
+            redirect_to idea_path
+        end
+        
     end
 
     private

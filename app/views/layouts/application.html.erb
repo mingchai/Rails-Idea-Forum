@@ -14,7 +14,7 @@
       |
       <%= link_to 'New Idea', new_idea_path %>
       |
-      <% if signed_in?%>
+      <% if user_signed_in?%>
       Hello, <%= current_user.first_name%>!
       <%= link_to 'Logout', session_path, method: :delete %>
       <% else %>
@@ -25,7 +25,7 @@
     </nav>
   </header>
 
-  <body>
+  <body class = "m-4">
   <% flash.each do |type, message|%>
     <div>
       <strong><%= message %></strong>

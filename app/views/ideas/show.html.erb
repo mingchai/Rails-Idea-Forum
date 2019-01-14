@@ -2,6 +2,35 @@
 <h3><%= @idea.title%></h3>
 <small>Created by <%= @idea.user.full_name%> </small>
 <div><%= @idea.description%></div>
-<%= link_to 'Update Idea', edit_idea_path(@idea.id) %>
-|
-<%= link_to 'Delete Idea', idea_path(@idea.id), method: :delete, data: {confirm: "Idea will be deleted. Proceed?"} %>
+<% if can?(:crud, @idea) %>
+<%= link_to 'Update Idea', edit_idea_path(@idea.id), class: "btn btn-primary" %>
+<%= link_to 'Delete Idea', idea_path(@idea.id), method: :delete, data: {confirm: "Idea will be deleted. Proceed?"}, class: "btn btn-danger" %>
+<% end %>
+<br>
+<br>
+<%if user_signed_in?%>
+    <h5>Create New Review Here:</h5>
+    <%= form_with model:[@idea, @review], local: true do |f|%>
+    <%if @review.errors.present?%>
+    <p><%=@review.errors.full_messages.join(", ")%></p>
+    <% end %>
+    <div>
+    <%=f.label :title%> <br>
+    <%=f.text_area :title%>
+    </div>
+    <br>
+    <%=f.submit%>
+    <% end %>
+<% else %>
+    <p>Please sign in or sign up to leave a review</p>
+<% end %>
+<hr>
+<h5>Current Reviews:</h5>
+<ul>
+<% @reviews.each do |review|%>
+<li>
+    <%= review.title%> <br>
+    <small>Review By: <%= review.user.full_name %></small>
+</li>
+<% end %>
+</ul>
