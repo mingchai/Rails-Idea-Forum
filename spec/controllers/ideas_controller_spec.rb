@@ -4,6 +4,7 @@ RSpec.describe IdeasController, type: :controller do
     def current_user
         @current_user ||= FactoryBot.create(:user)
     end
+
     describe "#new" do
         context 'without user signed in' do
             it 'redirects to a new session page' do
@@ -93,11 +94,6 @@ RSpec.describe IdeasController, type: :controller do
                 
                 expect(assigns(:idea)).to eq(idea)
             end
-            it 'redirects to the show page' do
-                idea = FactoryBot.create(:idea)
-                get(:edit, params: {id: idea.id})
-                expect(response).to redirect_to(idea_path)
-            end
         end
     end
 
@@ -111,11 +107,23 @@ RSpec.describe IdeasController, type: :controller do
             end
         end
         context 'with signed-in user' do
-            it 'removes an entry from the database'
-            it 'redirects to the root/index page'
+            before do
+                session[:user_id] = current_user.id
+            end
+            it 'removes the specified entry from the database' do
+                idea = FactoryBot.create(:idea, user: current_user)
+                delete(:destroy, params: {id: idea.id})
+                expect(Idea.find_by(id: idea.id )).to be(nil)
+            end
+
+            it 'redirects to the root/index page' do
+                idea = FactoryBot.create(:idea, user: current_user)
+                delete(:destroy, params: {id: idea.id})
+
+                expect(response).to redirect_to(ideas_url)
+            end
         end
 
     end
-
 
 end

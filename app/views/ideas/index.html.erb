@@ -5,6 +5,7 @@
 <% end %>
 
 <script>
+// Works with current setup, could look to apply attributes to all children elements to perform same function
 let descriptions = document.querySelectorAll("small")
 descriptions.forEach(d =>{
     d.style.visibility = "collapse";
@@ -23,13 +24,17 @@ headings.forEach(title => {
 let buttons = document.querySelectorAll(`#idea-title > input`)
 buttons.forEach(button => {
     button.addEventListener("click", event =>{
-                console.log(event)
+                // console.log(event)
+                // Toggle Visibility of Description
                 let btn = event.currentTarget;
                 let sml = btn.parentElement.nextElementSibling
-                sml.classList.toggle('visible');
 
+                sml.classList.toggle('visible');
+                
+                // Image Swap
                 let img1 = "https://upload.wikimedia.org/wikipedia/commons/a/a2/Icon_Add_256x256.png"
                 let img2 = "https://svgsilh.com/svg/1270000.svg"
+
                 if(btn.src == img1){
                     btn.setAttribute("src","https://svgsilh.com/svg/1270000.svg");
                 } else if(btn.src == img2){
