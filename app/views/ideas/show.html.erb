@@ -1,0 +1,41 @@
+<h1>Idea Details</h1>
+<h3><%= @idea.title%></h3>
+<small>Created by <%= @idea.user.full_name%> </small>
+<div><%= @idea.description%></div>
+<% if can?(:crud, @idea) %>
+<%= link_to 'Update Idea', edit_idea_path(@idea.id), class: "btn btn-primary" %>
+<%= link_to 'Delete Idea', idea_path(@idea.id), method: :delete, data: {confirm: "Idea will be deleted. Proceed?"}, class: "btn btn-danger" %>
+<% end %>
+<br>
+<br>
+<%if user_signed_in?%>
+    <h5>Create New Review Here:</h5>
+    <%= form_with model:[@idea, @review], local: true do |f|%>
+    <%if @review.errors.present?%>
+    <p><%=@review.errors.full_messages.join(", ")%></p>
+    <% end %>
+    <div>
+    <%=f.label :title, "Your Thoughts"%> <br>
+    <%=f.text_area :title, class: "form-control"%>
+    </div>
+    <br>
+    <%=f.submit class: "btn btn-primary"%>
+    <% end %>
+<% else %>
+    <p>Please sign in or sign up to leave a review</p>
+<% end %>
+<hr>
+<h5>Current Reviews:</h5>
+<ul>
+<% @reviews.each do |review|%>
+<li>
+    <%= review.title%> <br>
+    <small>Review By: <%= review.user.full_name %></small>
+    <% if can?(:crud, review) %>
+      <small>
+      <%= link_to 'Delete Review', idea_review_path(@idea.id), method: :delete, data:{confirm: "Are you sure you want to delete this review?"}, class: "badge badge-danger" %>
+      </small>
+    <% end %>
+</li>
+<% end %>
+</ul>

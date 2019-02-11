@@ -1,0 +1,45 @@
+<h1>Ideas Page</h1>
+<%@ideas.each do |idea|%>
+    <h4 id= "idea-title"><%= link_to idea.title, idea_path(idea.id) %></h4>
+    <small><%= idea.description %></small>
+<% end %>
+
+<script>
+// Works with current setup, could look to apply attributes to all children elements to perform same function
+let descriptions = document.querySelectorAll("small")
+descriptions.forEach(d =>{
+    d.style.visibility = "collapse";
+})
+
+let headings = document.querySelectorAll("#idea-title");
+
+headings.forEach(title => {
+    let button = document.createElement("input")
+    button.setAttribute("type","image")
+    button.setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/a/a2/Icon_Add_256x256.png")
+    button.style.height = "20px";
+    title.prepend(button);
+})
+
+let buttons = document.querySelectorAll(`#idea-title > input`)
+buttons.forEach(button => {
+    button.addEventListener("click", event =>{
+                // console.log(event)
+                // Toggle Visibility of Description
+                let btn = event.currentTarget;
+                let sml = btn.parentElement.nextElementSibling
+
+                sml.classList.toggle('visible');
+                
+                // Image Swap
+                let img1 = "https://upload.wikimedia.org/wikipedia/commons/a/a2/Icon_Add_256x256.png"
+                let img2 = "https://svgsilh.com/svg/1270000.svg"
+
+                if(btn.src == img1){
+                    btn.setAttribute("src","https://svgsilh.com/svg/1270000.svg");
+                } else if(btn.src == img2){
+                    btn.setAttribute("src","https://upload.wikimedia.org/wikipedia/commons/a/a2/Icon_Add_256x256.png")
+                }
+        })
+})
+</script>

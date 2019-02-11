@@ -1,0 +1,17 @@
+<%= form_with model: @idea, local: true do |f|%>
+<h3>What's Your Idea?</h3>
+<% if @idea.errors.present?%>
+    <%= @idea.errors.full_messages.join(", ")%>
+<% end %>
+<div>
+<%= f.label :title%> <br>
+<%= f.text_field :title, class: "form-control"%>
+</div>
+
+<div>
+<%= f.label :description%> <br>
+<%= f.text_area :description, class: "form-control"%>
+</div>
+<br>
+<%= f.submit class: "btn btn-primary"%>
+<% end %>
